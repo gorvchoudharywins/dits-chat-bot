@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>DITS Chatbot</title>
+</head>
+
+<body>
+    <div class="chatbot-wrapper">
+        <div class="chatbot-circle">
+            <svg class="chatbot-circle-open" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                width="24px" fill="#848A93">
+                <path
+                    d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+            </svg>
+            <svg class="chatbot-circle-close d-none" xmlns="http://www.w3.org/2000/svg" height="24px"
+                viewBox="0 -960 960 960" width="24px" fill="#848A93">
+                <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+        </div>
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <div class="d-flex align-items-center">
+                    <div class="logo">
+                        <img src="images/logo.svg" alt="DITS">
+                    </div>
+                    <div class="pl-3">
+                        <h5 class="chatbot-title">DITS Chatbot</h5>
+                        <p>You can ask me anything</p>
+                    </div>
+                </div>
+                <button type="button" class="chatbot-close" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#848A93">
+                        <path d="M240-440v-80h480v80H240Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="chatbot-body">
+                <div class="chatbot-body-wrapper">
+
+                    <form class="chatbot-input-form">
+                        <input type="text" class="form-control" placeholder="Enter Your Name">
+                        <input type="text" class="form-control" placeholder="Enter Your Email">
+                        <input type="text" class="form-control" placeholder="Enter Your Mobile Number">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                    <div class="chatbox-messages d-none">
+                        <div class="chatbot-message-wrapper">
+                            <div class="message-container">
+                                <div class="message-avatar">
+                                    <img src="images/logo-white.svg" alt="DITS">
+                                </div>
+                                <div class="message-content">
+                                    HI! How can I assist you?
+                                </div>
+                            </div>
+                            <div class="message-container user-message">
+                                <div class="message-content">
+                                    HI! How can I assist you?
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatbox-send-wrapper">
+                            <form class="chatbox-send-form">
+                                <input type="text" class="form-control" placeholder="Type your message here...">
+                                <button type="submit" class="send-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#848A93">
+                                        <path
+                                            d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var inputForm = document.querySelector('.chatbot-input-form');
+            var messageWrapper = document.querySelector('.chatbox-messages');
+            var chatbotCircle = document.querySelector('.chatbot-circle');
+            var chatbotContainer = document.querySelector('.chatbot-container');
+            var chatbotClose = document.querySelector('.chatbot-close');
+            var circleOpen = document.querySelector('.chatbot-circle-open');
+            var circleClose = document.querySelector('.chatbot-circle-close');
+
+            inputForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                inputForm.classList.add('d-none');
+                messageWrapper.classList.remove('d-none');
+            });
+
+            chatbotCircle.addEventListener('click', function () {
+                chatbotContainer.classList.toggle('show');
+                var isShown = chatbotContainer.classList.contains('show');
+                if (isShown) {
+                    circleOpen.classList.add('d-none');
+                    circleClose.classList.remove('d-none');
+                } else {
+                    circleOpen.classList.remove('d-none');
+                    circleClose.classList.add('d-none');
+                }
+            });
+
+            chatbotClose.addEventListener('click', function () {
+                chatbotContainer.classList.remove('show');
+                circleOpen.classList.remove('d-none');
+                circleClose.classList.add('d-none');
+            });
+        });
+    </script>
+</body>
+
+</html>
