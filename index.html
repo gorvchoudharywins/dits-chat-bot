@@ -46,9 +46,9 @@
                 <div class="chatbot-body-wrapper">
 
                     <form class="chatbot-input-form">
-                        <input type="text" class="form-control" placeholder="Enter Your Name">
-                        <input type="text" class="form-control" placeholder="Enter Your Email">
-                        <input type="text" class="form-control" placeholder="Enter Your Mobile Number">
+                        <input type="text" class="form-control" id="chatbot-name" placeholder="Enter Your Name">
+                        <input type="text" class="form-control" id="chatbot-email" placeholder="Enter Your Email">
+                        <input type="text" class="form-control" id="chatbot-mobile" placeholder="Enter Your Mobile Number">
                         <button type="submit" class="btn btn-primary">Send</button>
                     </form>
                     <div class="chatbox-messages d-none">
@@ -71,6 +71,7 @@
                             <form class="chatbox-send-form">
                                 <input type="text" class="form-control" placeholder="Type your message here...">
                                 <button type="submit" class="send-btn">
+                                    <script src="script.js"></script>
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                                         width="24px" fill="#848A93">
                                         <path
@@ -84,43 +85,6 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var inputForm = document.querySelector('.chatbot-input-form');
-            var messageWrapper = document.querySelector('.chatbox-messages');
-            var chatbotCircle = document.querySelector('.chatbot-circle');
-            var chatbotContainer = document.querySelector('.chatbot-container');
-            var chatbotClose = document.querySelector('.chatbot-close');
-            var circleOpen = document.querySelector('.chatbot-circle-open');
-            var circleClose = document.querySelector('.chatbot-circle-close');
-
-            inputForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                inputForm.classList.add('d-none');
-                messageWrapper.classList.remove('d-none');
-            });
-
-            chatbotCircle.addEventListener('click', function () {
-                chatbotContainer.classList.toggle('show');
-                var isShown = chatbotContainer.classList.contains('show');
-                if (isShown) {
-                    circleOpen.classList.add('d-none');
-                    circleClose.classList.remove('d-none');
-                } else {
-                    circleOpen.classList.remove('d-none');
-                    circleClose.classList.add('d-none');
-                }
-            });
-
-            chatbotClose.addEventListener('click', function () {
-                chatbotContainer.classList.remove('show');
-                circleOpen.classList.remove('d-none');
-                circleClose.classList.add('d-none');
-            });
-        });
-    </script>
 </body>
 
 </html>
