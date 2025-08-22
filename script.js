@@ -73,28 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .catch((error) => {
-        if (error) {
-          // Get refreshToken from cookies
-          const refreshToken = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("refreshToken="))
-            ?.split("=")[1];
-
-          if (refreshToken) {
-            console.log("Refresh token found:", refreshToken);
-            handleRefreshToken(refreshToken);
-          } else {
-            console.log("No refresh token found in cookies.");
-          }
-        } else {
-          console.error("API Error:", error);
-        }
+        console.error("API Error:", error);
       });
 
     // TODO: Implement real API call
     const dummyResponse = {
-      accessToken: "dummyAccessToken",
-      refreshToken: "dummyRefreshToken",
+      sessionId: "dummySessionId",
     };
     handleResponse(dummyResponse);
     sessionStorage.setItem("last_user", JSON.stringify(payload));
@@ -102,40 +86,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleResponse(data) {
     console.log("API Response:", data);
-    const { accessToken, refreshToken } = data;
-    // Save accessToken in sessionStorage
-    if (accessToken) {
-      sessionStorage.setItem("accessToken", accessToken);
+    const { sessionId } = data;
+    // Save sessionId in sessionStorage
+    if (sessionId) {
+      sessionStorage.setItem("sessionId", sessionId);
+      getPreviousChat();
 
       // if token then move to chat screen
       inputForm.classList.add("d-none");
       messageWrapper.classList.remove("d-none");
     }
-
-    // Save refreshToken in cookies
-    if (refreshToken) {
-      document.cookie = `refreshToken=${refreshToken}; path=/;`;
-    }
   }
 
-  function handleRefreshToken(refreshToken) {
-    console.log("Refreshing token:", refreshToken);
-    // Add your token refresh logic here
-    fetch("https://dummyapi.io/data/api/refresh-token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ refreshToken }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          handleResponse(data);
-        }
-      })
-      .catch((error) => {
-        console.error("Token refresh error:", error);
-      });
+  function getPreviousChat() {
+    const sessionId = sessionStorage.getItem("sessionId");
+    if (sessionId) {
+      fetch(`https://dummyapi.io/data/api/chatbot/${sessionId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            displayPreviousChat(data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching previous chat:", error);
+        });
+    }
   }
 });
