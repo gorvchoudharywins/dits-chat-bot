@@ -40,15 +40,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Method for user input
-  inputForm.addEventListener("submit", function (e) {
+  inputForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     //Api payload
     const payload = {
-      name: document.getElementById("chatbot-name").value,
+      username: document.getElementById("chatbot-name").value,
       email: document.getElementById("chatbot-email").value,
       mobile: document.getElementById("chatbot-mobile").value,
+      browser: navigator.userAgent, // Browser info
     };
+
+    try {
+      // Get public IP address (IPv4)
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      payload.ip = data.ip;
+    } catch (e) {
+      payload.ip = "Unavailable"; // fallback if API fails
+    }
 
     // Call API
     handleSubmit(payload);
@@ -58,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleSubmit(payload) {
     console.log("API Payload:", payload);
 
-    fetch("https://dummyapi.io/data/api/chatbot", {
+    fetch("https://c93c7b32cfc9.ngrok-free.app/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,18 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         console.error("API Error:", error);
       });
-
-    // TODO: Implement real API call
-    const dummyResponse = {
-      sessionId: "dummySessionId",
-    };
-    handleResponse(dummyResponse);
-    sessionStorage.setItem("last_user", JSON.stringify(payload));
   }
 
   function handleResponse(data) {
     console.log("API Response:", data);
     const { sessionId } = data;
+
     // Save sessionId in sessionStorage
     if (sessionId) {
       sessionStorage.setItem("sessionId", sessionId);
