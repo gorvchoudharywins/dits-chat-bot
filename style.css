@@ -96,7 +96,7 @@
   padding: 0 4px 4px;
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper {
-  height: 500px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   overflow: hidden; /* prevent whole panel from scrolling */
@@ -205,4 +205,29 @@
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbox-send-wrapper .chatbox-send-form .send-btn svg path {
   fill: #fff;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/* Typing indicator animation */
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.35; }
+  30% { transform: translateY(-6px) scale(1.25); opacity: 1; }
+}
+.chatbot-wrapper .typing-indicator .message-content {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 20px;
+}
+.chatbot-wrapper .typing-indicator .dot {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  animation: typing-bounce 1.1s infinite ease-in-out;
+}
+.chatbot-wrapper .typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
+.chatbot-wrapper .typing-indicator .dot:nth-child(2) { animation-delay: 0.15s; }
+.chatbot-wrapper .typing-indicator .dot:nth-child(3) { animation-delay: 0.3s; }
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-wrapper .typing-indicator .dot { animation: none; opacity: 0.7; }
+}

@@ -310,16 +310,23 @@ document.addEventListener("DOMContentLoaded", function () {
   function showTypingIndicator() {
     var messageList = document.querySelector(".chatbot-message-wrapper");
     if (!messageList) return;
+    // Prevent duplicates
+    if (messageList.querySelector(".typing-indicator")) {
+      messageList.scrollTop = messageList.scrollHeight;
+      return;
+    }
     var typingDiv = document.createElement("div");
     typingDiv.className = "message-container typing-indicator";
     typingDiv.innerHTML = `
-    <div class="message-avatar">
-      <img src="images/logo-white.svg" alt="DITS">
-    </div>
-    <div class="message-content">
-      <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-    </div>
-  `;
+      <div class="message-avatar">
+        <img src="images/logo-white.svg" alt="DITS">
+      </div>
+      <div class="message-content">
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+      </div>
+    `;
     messageList.appendChild(typingDiv);
     messageList.scrollTop = messageList.scrollHeight;
   }
