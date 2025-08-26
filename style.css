@@ -97,7 +97,9 @@
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper {
   height: 300px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* prevent whole panel from scrolling */
   background-color: #fff;
   border-radius: 28px;
 }
@@ -119,8 +121,8 @@
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%;
+  flex: 1;
+  min-height: 0; /* allow children to shrink for overflow */
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper {
   display: flex;
@@ -128,6 +130,8 @@
   gap: 24px;
   padding: 25px 15px;
   flex: 1;
+  min-height: 0; /* important for flex overflow */
+  overflow-y: auto; /* scroll only the messages */
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper .message-container {
   display: flex;
@@ -168,6 +172,7 @@
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbox-send-wrapper {
   border-top: 1px solid #e3e3e3;
   padding: 15px 10px;
+  background: #fff; /* ensure not transparent over gradient shell */
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbox-send-wrapper .chatbox-send-form {
   display: flex;

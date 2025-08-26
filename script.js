@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const chatContainer = document.querySelector(".chatbot-body-wrapper");
     if (entering) {
-      chatContainer.style.height = `77vh`;
+      chatContainer.style.height = `74vh`;
       enterIcon.style.display = "none";
       exitIcon.style.display = "inline";
     } else {
