@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
       addNewChat.style.display = "inline";
 
       // getPreviousChat();
-      renderDummyMessages();
+      // renderDummyMessages();
     }
   })();
 
@@ -251,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var message = messageInput.trim();
     if (message) {
       addMessage("user", message);
+      showTypingIndicator();
 
       const payload = {
         query: message,
@@ -267,10 +268,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           if (data.answer) {
+            removeTypingIndicator();
             addMessage("bot", data.answer);
           }
         })
         .catch((error) => {
+          removeTypingIndicator();
           console.error("API Error:", error);
         });
     }
@@ -301,5 +304,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     messageList.appendChild(messageElement);
     messageList.scrollTop = messageList.scrollHeight;
+  }
+
+  // Show typing indicator
+  function showTypingIndicator() {
+    var messageList = document.querySelector(".chatbot-message-wrapper");
+    if (!messageList) return;
+    var typingDiv = document.createElement("div");
+    typingDiv.className = "message-container typing-indicator";
+    typingDiv.innerHTML = `
+    <div class="message-avatar">
+      <img src="images/logo-white.svg" alt="DITS">
+    </div>
+    <div class="message-content">
+      <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </div>
+  `;
+    messageList.appendChild(typingDiv);
+    messageList.scrollTop = messageList.scrollHeight;
+  }
+
+  // Remove typing indicator
+  function removeTypingIndicator() {
+    var messageList = document.querySelector(".chatbot-message-wrapper");
+    if (!messageList) return;
+    var typingDiv = messageList.querySelector(".typing-indicator");
+    if (typingDiv) {
+      messageList.removeChild(typingDiv);
+    }
   }
 });
