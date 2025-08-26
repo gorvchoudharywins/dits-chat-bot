@@ -8,30 +8,33 @@ document.addEventListener("DOMContentLoaded", function () {
   var chatbotClose = document.getElementById("chatbot-close");
   var circleOpen = document.querySelector(".chatbot-circle-open");
   var circleClose = document.querySelector(".chatbot-circle-close");
-
-
+  const chatWrapper = document.querySelector(".chatbot-body-wrapper");
+  const addNewChat = document.getElementById("new-chatbox");
   // Fullscreen toggle
-  const btn = document.getElementById("fullscreen-toggle");
+  const fullScreenBtn = document.getElementById("fullscreen-toggle");
   const enterIcon = document.getElementById("fullscreen-icon");
   const exitIcon = document.getElementById("exitfullscreen-icon");
 
-  btn.addEventListener("click", () => {
-    const entering = btn.getAttribute("aria-pressed") !== "true";
-    btn.setAttribute("aria-pressed", entering ? "true" : "false");
-    btn.setAttribute(
+  fullScreenBtn.addEventListener("click", () => {
+    const entering = fullScreenBtn.getAttribute("aria-pressed") !== "true";
+    fullScreenBtn.setAttribute("aria-pressed", entering ? "true" : "false");
+    fullScreenBtn.setAttribute(
       "aria-label",
       entering ? "Exit full screen" : "Enter full screen"
     );
     enterIcon.hidden = entering;
     exitIcon.hidden = !entering;
 
-    const chatContainer = document.querySelector(".chatbot-body-wrapper");
     if (entering) {
-      chatContainer.style.height = `74vh`;
+      chatbotContainer.style.width = `200vh`;
+      chatWrapper.style.setProperty("height", "73vh", "important");
+
       enterIcon.style.display = "none";
       exitIcon.style.display = "inline";
     } else {
-      chatContainer.style.height = "";
+      chatbotContainer.style.width = "";
+      chatWrapper.style.setProperty("height", "", "important");
+
       enterIcon.style.display = "inline";
       exitIcon.style.display = "none";
     }
@@ -59,6 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize Functionality
   (function init() {
+    fullScreenBtn.style.display = "none";
+    addNewChat.style.display = "none";
+
     const lastUser = JSON.parse(sessionStorage.getItem("last_user"));
     if (lastUser) {
       console.log("Last user found in sessionStorage:", lastUser);
@@ -70,12 +76,38 @@ document.addEventListener("DOMContentLoaded", function () {
     // If session exists, show chat and load history
     const sessionId = sessionStorage.getItem("sessionId");
     if (sessionId) {
+      // show chat container
       inputForm.classList.add("d-none");
       messageWrapper.classList.remove("d-none");
+      // show full-screen/new chat button
+      fullScreenBtn.style.display = "inline";
+      addNewChat.style.display = "inline";
+
       // getPreviousChat();
       renderDummyMessages();
     }
   })();
+
+  addNewChat.addEventListener("click", function () {
+    // Logic to add a new chat box
+    inputForm.classList.remove("d-none");
+    messageWrapper.classList.add("d-none");
+
+    fullScreenBtn.style.display = "none";
+    addNewChat.style.display = "none";
+    sessionStorage.removeItem("sessionId");
+
+    chatbotContainer.style.width = "";
+    chatWrapper.style.setProperty("height", "", "important");
+
+    const lastUser = JSON.parse(sessionStorage.getItem("last_user"));
+    if (lastUser) {
+      console.log("Last user found in sessionStorage:", lastUser);
+      document.getElementById("chatbot-name").value = lastUser.username || "";
+      document.getElementById("chatbot-email").value = lastUser.email || "";
+      document.getElementById("chatbot-mobile").value = lastUser.mobile || "";
+    }
+  });
 
   // Method for chat box open
   chatbotCircle.addEventListener("click", function () {
@@ -127,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleSubmit(payload) {
     console.log("API Payload:", payload);
 
-    fetch("https://5165fe420a01.ngrok-free.app/user/register", {
+    fetch("https://64169343f09e.ngrok-free.app/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -154,11 +186,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (session_id) {
       sessionStorage.setItem("sessionId", session_id);
 
-      // if token then move to chat screen
+      // if session id exists then move to chat screen
       inputForm.classList.add("d-none");
       messageWrapper.classList.remove("d-none");
 
+      // show add new chat and full screen button
+      fullScreenBtn.style.display = "inline";
+      addNewChat.style.display = "inline";
+
       // init message
+      messageList.innerHTML = "";
       addMessage("bot", "How can I assist you today?");
     }
   }
@@ -217,12 +254,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const payload = {
         query: message,
-        source_url: "Ditstek",
-        user_id: 0,
         session_id: sessionStorage.getItem("sessionId"),
       };
 
-      fetch("https://5165fe420a01.ngrok-free.app/chat/new", {
+      fetch("https://64169343f09e.ngrok-free.app/chat/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -231,10 +266,8 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data) {
-            debugger;
-            // handleResponse(data);
-            // sessionStorage.setItem("last_user", JSON.stringify(payload));
+          if (data.answer) {
+            addMessage("bot", data.answer);
           }
         })
         .catch((error) => {
