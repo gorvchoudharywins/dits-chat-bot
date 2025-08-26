@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
       enterIcon.style.display = "inline";
       exitIcon.style.display = "none";
     }
+    // Always scroll to bottom of messages
+    if (messageList) {
+      messageList.scrollTop = messageList.scrollHeight;
+    }
   });
   /////////////
 
