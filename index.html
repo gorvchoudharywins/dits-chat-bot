@@ -35,12 +35,34 @@
                         <p>You can ask me anything</p>
                     </div>
                 </div>
-                <button type="button" class="chatbot-close" aria-label="Close">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#848A93">
-                        <path d="M240-440v-80h480v80H240Z" />
-                    </svg>
-                </button>
+                <div class="flex-grow-1 d-flex justify-content-end">
+                    <div>
+                        <button type="button" class="chatbot-button" id="fullscreen-toggle"
+                            aria-label="Toggle Fullscreen">
+                            <!-- Default: Fullscreen Icon -->
+                            <svg id="fullscreen-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="#848A93" viewBox="0 0 24 24">
+                                <path
+                                    d="M7 14H5v5h5v-2H7v-3ZM5 10h2V7h3V5H5v5Zm12 7h-3v2h5v-5h-2v3ZM14 5v2h3v3h2V5h-5Z" />
+                            </svg>
+
+                            <!-- Hidden Exit Fullscreen Icon -->
+                            <svg id="exitfullscreen-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="#848A93" viewBox="0 0 24 24" style="display:none">
+                                <path
+                                    d="M16 16h3v-2h-5v5h2v-3ZM5 16h3v3h2v-5H5v2Zm11-8h3V6h-5v5h2V8ZM8 5H5v2h5V2H8v3Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pl-1">
+                        <button type="button" class="chatbot-button" id="chatbot-close" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#848A93">
+                                <path d="M240-440v-80h480v80H240Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="chatbot-body">
                 <div class="chatbot-body-wrapper">

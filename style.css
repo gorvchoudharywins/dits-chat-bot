@@ -75,7 +75,7 @@
   color: #fff;
   font-size: 13px;
 }
-.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-close {
+.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-button {
   border: none;
   background-color: rgba(255, 255, 255, 0.1);
   opacity: 0.8;
@@ -86,10 +86,10 @@
   align-items: center;
   justify-content: center;
 }
-.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-close:hover {
+.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-button:hover {
   opacity: 1;
 }
-.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-close svg path {
+.chatbot-wrapper .chatbot-container .chatbot-header .chatbot-button svg path {
   fill: #fff;
 }
 .chatbot-wrapper .chatbot-container .chatbot-body {
