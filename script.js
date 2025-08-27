@@ -83,8 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       fullScreenBtn.style.display = "inline";
       addNewChat.style.display = "inline";
 
-      // getPreviousChat();
-      // renderDummyMessages();
+      getPreviousChat();
     }
   })();
 
@@ -116,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isShown) {
       circleOpen.classList.add("d-none");
       circleClose.classList.remove("d-none");
+      messageList.scrollTop = messageList.scrollHeight;
     } else {
       circleOpen.classList.remove("d-none");
       circleClose.classList.add("d-none");
@@ -194,6 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
       fullScreenBtn.style.display = "inline";
       addNewChat.style.display = "inline";
 
+      enterIcon.style.display = "inline";
+      exitIcon.style.display = "none";
+
       // init message
       messageList.innerHTML = "";
       addMessage("bot", "How can I assist you today?");
@@ -203,11 +206,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function getPreviousChat() {
     const sessionId = sessionStorage.getItem("sessionId");
     if (sessionId) {
-      fetch(`https://dummyapi.io/data/api/chatbot/${sessionId}`)
+      fetch(`https://64169343f09e.ngrok-free.app/chat/${sessionId}/messages`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
-          if (data) {
-            // displayPreviousChat(data);
+          if (data.messages.length > 0) {
+            messageList.innerHTML = "";
+            data.messages.forEach((msg) => {
+              if (msg.role === "bot") {
+                addMessage("bot", msg.message);
+              } else {
+                addMessage("user", msg.message);
+              }
+            });
           }
         })
         .catch((error) => {
@@ -215,32 +231,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   }
-
-  // Function to render dummy messages dynamically
-  function renderDummyMessages() {
-    if (!messageList) return;
-    messageList.innerHTML = "";
-    const messages = [
-      { type: "bot", text: "HI! How can I assist you?" },
-      { type: "user", text: "Hello! I need help with my account." },
-      { type: "bot", text: "Sure, what issue are you facing?" },
-      { type: "user", text: "I can't log in." },
-      { type: "bot", text: "Have you tried resetting your password?" },
-      { type: "user", text: "Yes, but it didn't work." },
-    ];
-    messages.forEach((msg) => {
-      if (msg.type === "bot") {
-        addMessage("bot", msg.text);
-      } else {
-        addMessage("user", msg.text);
-      }
-    });
-
-    // Scroll to bottom after rendering
-    messageList.scrollTop = messageList.scrollHeight;
-  }
-
-  // ***************************************************************************** //
 
   // Send message
   sendForm.addEventListener("submit", function (e) {
