@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // init message
       messageList.innerHTML = "";
-      addMessage("bot", "How can I assist you today?");
+      addMessage("bot", "Hello 👋 How can I assist you today?");
     }
   }
 

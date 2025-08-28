@@ -171,6 +171,10 @@
   border-radius: 10px 10px 10px 0;
   font-size: 15px;
 }
+.chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper .message-container .message-content ol,
+.chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper .message-container .message-content ul {
+  margin-left: 40px;
+}
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbox-send-wrapper {
   border-top: 1px solid #e3e3e3;
   padding: 15px 10px;
