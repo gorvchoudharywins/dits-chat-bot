@@ -170,6 +170,12 @@
   padding: 10px 15px;
   border-radius: 10px 10px 10px 0;
   font-size: 15px;
+  line-height: 2;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper .message-container .message-content ol,
 .chatbot-wrapper .chatbot-container .chatbot-body .chatbot-body-wrapper .chatbox-messages .chatbot-message-wrapper .message-container .message-content ul {
